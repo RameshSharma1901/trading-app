@@ -5,13 +5,16 @@ import { TradeDetails } from '../tradeDetails/TradeDetails';
 import { TradeInput } from '../tradeInput/TradeInput'
 import { Layout } from 'antd';
 import './index.css';
+import { TradeDetailsProvider } from '../tradeContext/TradeContext';
 
 export const LandingPage = () =>
     <div>
-        <Layout>
+        <TradeDetailsProvider>
+            <Layout>
                 <SplitterLayout vertical false>
                     <TradeInput />
                     <TradeDetails />
                 </SplitterLayout>
-        </Layout>
+            </Layout>
+        </TradeDetailsProvider>
     </div>

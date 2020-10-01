@@ -6,6 +6,10 @@
     margin-top: 2%;
 }
 
-element.style {
+.action-sell-styles {
+    background-color: red;
+}
+
+.action-buy-styles {
     background-color: green;
 }
