@@ -5,6 +5,8 @@ import '../mainPage/index.css';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import {TradeContext} from '../tradeContext/TradeContext'
+import { Typography } from 'antd';
+const { Text } = Typography;
 
 const { Content, Header } = Layout;
 
@@ -12,7 +14,7 @@ const { Content, Header } = Layout;
 
 export const TradeDetails = () => {
   
-    const [rowData, setRowData] = useContext(TradeContext); 
+    const [rowData] = useContext(TradeContext); 
 
     const gridOptions = {
 
@@ -36,7 +38,7 @@ export const TradeDetails = () => {
 
     return (
         <Content>
-            <Header>Order Blotter</Header>
+            <Header><Text style={{color:'white'}}>Order Blotter</Text> <Text style={{color:'white', align:'right'}}>submittedTimeStamp</Text></Header>
 
         <div className="ag-theme-alpine" style={ { height: 1000 } }>
             <AgGridReact

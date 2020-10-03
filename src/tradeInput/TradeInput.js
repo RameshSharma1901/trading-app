@@ -8,9 +8,12 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Button from '@material-ui/core/Button';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import { TradeContext } from '../tradeContext/TradeContext'
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Select } from 'antd';
+import 'antd/dist/antd.css';
+import { red } from '@material-ui/core/colors';
 
-
-
+const { Option } = Select;
 const { Content, Header } = Layout;
 const { Text } = Typography;
 
@@ -32,19 +35,24 @@ export const TradeInput = () => {
         {
             action: action,
             symbol: symbol,
-            quantity: quantity, 
-            price: price, 
-            orderType: orderType, 
-            tif: tif, 
-            stopPrice: stopPrice, 
+            quantity: quantity,
+            price: price,
+            orderType: orderType,
+            tif: tif,
+            stopPrice: stopPrice,
             comment: comment
         }])
 
     }
+
+    const searchValues = [
+        'AAPL', 'MSFT', 'GOOGL', 'VZ', 'MMM', 'NFLX', 'FB', 'TWTR', 'AMZN', 'EBAY'
+    ]
+
     return (
         <Content>
             <Header>
-                <Text type="secondary"><i>Ext Trader</i></Text> <Text>Order Entry</Text>
+                <Text type="secondary" style={{ color: 'antiquewhite' }}><i>Ext Trader</i></Text> <Text style={{ color: 'white' }}>Order Entry</Text>
             </Header>
 
             <div className='grid'>
@@ -68,7 +76,14 @@ export const TradeInput = () => {
                     </Grid>
                     <Grid item xs={3}>
                         <Grid item xs={12}>
-                            <TextField id="standard-basic" label="Symbol" value={symbol} name='symbol' onChange={(e) => { setSymbol(e.target.value) }} />
+                            <Autocomplete
+                                id="symbol"
+                                options={searchValues}
+                                getOptionLabel={(option) => option}
+                                style={{ width: '70%' }}
+                                renderInput={(params) => <TextField {...params} label="Symbol" variant="outlined" />}
+                            />
+
                         </Grid>
                     </Grid>
                     <Grid item xs={3}>
@@ -78,6 +93,7 @@ export const TradeInput = () => {
                                 label="Qty"
                                 type="number"
                                 name='quantity'
+                                InputProps={{ inputProps: { max: 999 } }}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -91,6 +107,7 @@ export const TradeInput = () => {
                                 id="filled-number"
                                 label="Price"
                                 type="number"
+                                InputProps={{ inputProps: { step: 0.01 } }}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -113,7 +130,7 @@ export const TradeInput = () => {
                                     >
 
                                         <option value='Day'>Market</option>
-                                        <option value='Sell'>Sell</option>
+                                        <option value='Limit'>Limit</option>
                                     </NativeSelect>
                                 </Grid>
                             </Grid>
@@ -128,8 +145,10 @@ export const TradeInput = () => {
                                         onChange={(e) => setTif(e.target.value)}
                                     >
 
-                                        <option value='Day'>Day</option>
-                                        <option value='Sell'>Sell</option>
+                                        <option value='GTC'>GTC</option>
+                                        <option value='DAY'>DAY</option>
+                                        <option value='FOK'>FOK</option>
+                                        <option value='IOC'>IOC</option>
                                     </NativeSelect>
                                 </Grid>
                             </Grid>
