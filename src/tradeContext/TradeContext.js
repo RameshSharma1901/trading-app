@@ -5,9 +5,10 @@ export const TradeContext = createContext();
 export const TradeDetailsProvider = (props) => {
 
     const [rowData, setRowData] = useState([]);
+    const [timeStamp, setTimeStamp] = useState();
 
     return (
-        <TradeContext.Provider value={[rowData, setRowData]}>
+        <TradeContext.Provider value={{rowDataParam:[rowData, setRowData], timeStampParam:[timeStamp, setTimeStamp]}}>
             {props.children}
         </TradeContext.Provider>
     )

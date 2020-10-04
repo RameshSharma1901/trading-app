@@ -13,8 +13,11 @@ const { Content, Header } = Layout;
 
 
 export const TradeDetails = () => {
-  
-    const [rowData] = useContext(TradeContext); 
+    const {rowDataParam, timeStampParam} =  useContext(TradeContext);
+    const [rowData, setRowData] = rowDataParam;
+    const [timeStamp, setTimeStamp] = timeStampParam;
+
+
 
     const gridOptions = {
 
@@ -38,7 +41,7 @@ export const TradeDetails = () => {
 
     return (
         <Content>
-            <Header><Text style={{color:'white'}}>Order Blotter</Text> <Text style={{color:'white', align:'right'}}>submittedTimeStamp</Text></Header>
+            <Header><Text style={{color:'white'}}>Order Blotter</Text> <Text style={{color:'white', marginLeft:'69%'}}>Last Updated : {timeStamp}</Text></Header>
 
         <div className="ag-theme-alpine" style={ { height: 1000 } }>
             <AgGridReact

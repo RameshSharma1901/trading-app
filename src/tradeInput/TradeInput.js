@@ -19,7 +19,9 @@ const { Text } = Typography;
 
 
 export const TradeInput = () => {
-    const [rowData, setRowData] = useContext(TradeContext);
+    const {rowDataParam, timeStampParam} =  useContext(TradeContext);
+    const [rowData, setRowData] = rowDataParam;
+    const [timeStamp, setTimeStamp] = timeStampParam;
 
     const [action, setAction] = React.useState('Buy');
     const [symbol, setSymbol] = React.useState('');
@@ -42,6 +44,7 @@ export const TradeInput = () => {
             stopPrice: stopPrice,
             comment: comment
         }])
+        setTimeStamp((new Date()).toUTCString());
 
     }
 
