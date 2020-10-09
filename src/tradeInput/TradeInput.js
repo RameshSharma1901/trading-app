@@ -17,6 +17,7 @@ import { Spin } from 'antd';
 import LoadingOverlay from 'react-loading-overlay';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Modal, Space } from 'antd';
+import AlertDialog from './AlertDialog';
 
 const { Option } = Select;
 const { Content, Header } = Layout;
@@ -26,7 +27,7 @@ var currentCount = 1;
 
 export const TradeInput = () => {
     const { rowDataParam, timeStampParam } = useContext(TradeContext);
-    const [count, setCount] = React.useState(0);
+    const [count, setCount] = React.useState(1);
     const [rowData, setRowData] = rowDataParam;
     const [timeStamp, setTimeStamp] = timeStampParam;
 
@@ -39,31 +40,40 @@ export const TradeInput = () => {
     const [tif, setTif] = React.useState('');
     const [stopPrice, setStopPrice] = React.useState(0);
     const [comment, setComment] = React.useState('');
+    const [open, setOpen] = React.useState(false);
 
-      
-      
+
+
     const submitTradeEntry = e => {
-        console.log({ spinner })
-        setCount(currentCount++)
-        setSpinner(true)
-        console.log({ spinner })
-        setTimeout(function () {
+        console.log({ currentCount })
+        if (count === 10) {
+            setOpen(true);
+            currentCount = 1;
+            setCount(1)
+        } else {
+            setOpen(false);
+            currentCount = currentCount + 1;
+            setCount(currentCount)
+            setSpinner(true)
+            setTimeout(function () {
 
-            setRowData(prevRowData => [...prevRowData,
-            {
-                action: action,
-                symbol: symbol,
-                quantity: quantity,
-                price: price,
-                orderType: orderType,
-                tif: tif,
-                stopPrice: stopPrice,
-                comment: comment
-            }])
-            setTimeStamp((new Date()).toUTCString());
-            setSpinner(false)
-        }, 2000)
+                setRowData(prevRowData => [...prevRowData,
+                {
+                    action: action,
+                    symbol: symbol,
+                    quantity: quantity,
+                    price: price,
+                    orderType: orderType,
+                    tif: tif,
+                    stopPrice: stopPrice,
+                    comment: comment
+                }])
+                setTimeStamp((new Date()).toUTCString());
+                setSpinner(false)
+            }, 2000)
+        }
     }
+
 
     const searchValues = [
         'AAPL', 'MSFT', 'GOOGL', 'VZ', 'MMM', 'NFLX', 'FB', 'TWTR', 'AMZN', 'EBAY'
@@ -71,14 +81,13 @@ export const TradeInput = () => {
 
     return (
         <Content>
+            {open && <AlertDialog open={open} />}
             <Header>
                 <Text type="secondary" style={{ color: 'antiquewhite' }}><i>Ext Trader</i></Text> <Text style={{ color: 'white' }}>Order Entry</Text>
             </Header>
-           
 
             <div className='grid'>
                 <LoadingOverlay active={spinner} text='Please wait..' spinner>
-                
 
                     <Grid container spacing={1} >
 
@@ -197,7 +206,9 @@ export const TradeInput = () => {
 
                         <Grid container>
                             <Grid item xs={5} >
-                                <TextareaAutosize onChange={(e) => setComment(e.target.value)} aria-label="minimum height" rowsMin={5} placeholder="<COMMENT>" style={{ width: '100%' }} />
+                                <TextareaAutosize onChange={(e) => setComment(e.target.value)} aria-label="minimum height"
+                                 rowsMin={5} placeholder="<COMMENT>" style={{ width: '100%' }} 
+                                 />
 
                             </Grid>
                             <Grid item xs={5} />
